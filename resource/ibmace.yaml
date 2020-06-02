@@ -1,0 +1,58 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: ace-server-ms1
+  namespace: ace
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - ace-server-ms1
+        from:
+          kind: ImageStreamTag
+          namespace: ace
+          name: 'ace-server-ms1:latest'
+  replicas: 1
+  selector:
+    app: ace-server-ms1
+    deploymentconfig: ace-server-ms1
+  template:
+    metadata:
+      labels:
+        app: ace-server-ms1
+        deploymentconfig: ace-server-ms1
+    spec:
+      containers:
+        - name: ace-server-ms1
+          image: >-
+            __IMAGE__
+          ports:
+            - containerPort: 7600
+              protocol: TCP
+            - containerPort: 7800
+              protocol: TCP
+          env:
+            - name: LICENSE
+              value: accept
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
