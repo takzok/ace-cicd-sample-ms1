@@ -1,4 +1,5 @@
-FROM cp.icr.io/ibm-ace-server-prod:11.0.0.8-r1
+# FROM cp.icr.io/ibm-ace-server-prod:11.0.0.8-r1
+FROM cp.icr.io/cp/icp4i/ace/ibm-ace-server-prod:11.0.0.8.1-amd64 
 # if using with Buildah in Tekton the ENV won't work
 
 # Copy in the bar file to a temporary directory
