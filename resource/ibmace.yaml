@@ -24,7 +24,7 @@ spec:
         from:
           kind: ImageStreamTag
           namespace: ace
-          name: 'ace-server-ms1:latest'
+          name: 'ace-cicd-sample-ms1:latest'
   replicas: 1
   selector:
     app: ace-server-ms1
