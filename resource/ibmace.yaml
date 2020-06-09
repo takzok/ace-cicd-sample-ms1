@@ -40,8 +40,6 @@ spec:
           image: >-
             __IMAGE__
           ports:
-            - containerPort: 7600
-              protocol: TCP
             - containerPort: 7800
               protocol: TCP
           env:
