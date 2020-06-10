@@ -53,8 +53,8 @@ spec:
               value: json
             - name: ACE_ENABLE_METRICS
               value: true
-            - name: MQSI_OVERRIDE_HOSTNAME
-              value: ''
+            # - name: MQSI_OVERRIDE_HOSTNAME
+            #   value: ''
             - name: "ACE_KEYSTORE_PASSWORD"
               valueFrom:
                  secretKeyRef:
@@ -115,6 +115,7 @@ spec:
         - name: truststore
           secret:
             secretName: ace-server-ms1-secret
+            optional: true
             items:
             - key: truststoreCert-mykey
               path: mykey.crt
@@ -140,7 +141,7 @@ spec:
             optional: true
             items:
             - key: serverconf
-              path: serverconf.yaml
+              path: server.conf.yaml
         - name: setdbparms
           secret:
             secretName: ace-server-ms1-secret
@@ -148,6 +149,7 @@ spec:
             items:
             - key: setdbparms
               path: setdbparms.txt
+
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
