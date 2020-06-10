@@ -2,9 +2,9 @@ CREATE COMPUTE MODULE MyService_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 		-- CALL CopyMessageHeaders();
-		-- CALL CopyEntireMessage();
-		SET OutputRoot.JSON.Data = InputRoot.JSON.Data;
-		SET OutputRoot.JSON.Data.Greeting = 'Hello ACE World!!';
+		CALL CopyEntireMessage();
+		-- SET OutputRoot.JSON.Data.Messages[1].Request = InputRoot.JSON.Data.Messages;
+		SET OutputRoot.JSON.Data.Messages.Response = 'Hello ACE World!! This is microservice 1!!';
 		RETURN TRUE;
 	END;
 
