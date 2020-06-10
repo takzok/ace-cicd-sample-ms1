@@ -46,7 +46,8 @@ spec:
             - name: LICENSE
               value: accept
           envFrom:
-            - secretRef: ace-server-ms1-secret
+            - secretRef:
+                name: ace-server-ms1-secret
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
