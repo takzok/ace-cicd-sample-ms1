@@ -6,6 +6,3 @@ COPY --chown=aceuser ./bar/Microservice1.bar /tmp
 
 # Deploy the BAR file. Need to use bash to make the profile work
 RUN bash -c 'mqsibar -w /home/aceuser/ace-server -a /tmp/Microservice1.bar -c'
-
-# Expose a port
-# EXPOSE 7800
