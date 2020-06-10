@@ -45,13 +45,109 @@ spec:
           env:
             - name: LICENSE
               value: accept
+            - name: ACE_SERVER_NAME
+              value: ACEMS1
+            - name: SERVICE_NAME
+              value: microservice1
+            - name: LOG_FORMAT
+              value: json
+            - name: ACE_ENABLE_METRICS
+              value: true
+            - name: MQSI_OVERRIDE_HOSTNAME
+              value: ''
+            - name: "ACE_KEYSTORE_PASSWORD"
+              valueFrom:
+                 secretKeyRef:
+                   name: ace-server-ms1-secret
+                   optional: true
+                   key: keystorePassword
+            - name: "ACE_TRUSTSTORE_PASSWORD"
+              valueFrom:
+                 secretKeyRef:
+                   name: ace-server-ms1-secret
+                   optional: true
+                   key: truststorePassword
           envFrom:
             - secretRef:
                 name: ace-server-ms1-secret
+          volumeMounts:
+            - name: webusers
+              mountPath: "/home/aceuser/initial-config/webusers"
+            - name: keystore
+              mountPath: "/home/aceuser/initial-config/keystore"
+            - name: truststore
+              mountPath: "/home/aceuser/initial-config/truststore"
+            - name: odbcini
+              mountPath: "/home/aceuser/initial-config/odbcini"
+            - name: policy
+              mountPath: "/home/aceuser/initial-config/policy"
+            - name: serverconf
+              mountPath: "/home/aceuser/initial-config/serverconf"
+            - name: setdbparms
+              mountPath: "/home/aceuser/initial-config/setdbparms"
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           imagePullPolicy: Always
+      volumes:
+        - name: webusers
+          secret:
+            secretName: ace-server-ms1-secret
+            optional: true
+            items:
+            - key: viewerusers
+              path: viewer-users.txt
+            - key: adminusers
+              path: admin-users.txt
+        # Marked as optional as the passphrase is not required and may not be provided
+        - name: keystore
+          secret:
+            secretName: ace-server-ms1-secret
+            optional: true
+            items:
+            - key: keystoreKey-mykey
+              path: mykey.key
+            - key: keystoreCert-mykey
+              path: mykey.crt
+            - key: keystorePass-mykey
+              path: mykey.pass
+        # Not marked as optional as the user has specified this certificate should exist in the secret
+        - name: truststore
+          secret:
+            secretName: ace-server-ms1-secret
+            items:
+            - key: truststoreCert-mykey
+              path: mykey.crt
+        - name: odbcini
+          secret:
+            secretName: ace-server-ms1-secret
+            optional: true
+            items:
+            - key: odbcini
+              path: odbc.ini
+        - name: policy
+          secret:
+            secretName: ace-server-ms1-secret
+            optional: true
+            items:
+            - key: policy
+              path: default.policyxml
+            - key: policyDescriptor
+              path: policy.descriptor
+        - name: serverconf
+          secret:
+            secretName: ace-server-ms1-secret
+            optional: true
+            items:
+            - key: serverconf
+              path: serverconf.yaml
+        - name: setdbparms
+          secret:
+            secretName: ace-server-ms1-secret
+            optional: true
+            items:
+            - key: setdbparms
+              path: setdbparms.txt
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
