@@ -52,9 +52,9 @@ spec:
             - name: LOG_FORMAT
               value: json
             - name: ACE_ENABLE_METRICS
-              value: true
+              value: "true"
             # - name: MQSI_OVERRIDE_HOSTNAME
-            #   value: ''
+            #   value: ""
             - name: "ACE_KEYSTORE_PASSWORD"
               valueFrom:
                  secretKeyRef:
