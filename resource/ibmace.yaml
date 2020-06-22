@@ -67,9 +67,6 @@ spec:
                    name: ace-server-ms1-secret
                    optional: true
                    key: truststorePassword
-          envFrom:
-            - secretRef:
-                name: ace-server-ms1-secret
           volumeMounts:
             - name: webusers
               mountPath: "/home/aceuser/initial-config/webusers"
@@ -118,7 +115,7 @@ spec:
             optional: true
             items:
             - key: truststoreCert-mykey
-              path: mykey.crt
+              path: truststoreCert-mykey.crt
         - name: odbcini
           secret:
             secretName: ace-server-ms1-secret
