@@ -6,6 +6,7 @@ CREATE COMPUTE MODULE MyService_Compute
 		-- SET OutputRoot.JSON.Data.Messages[1].Request = InputRoot.JSON.Data.Messages;
 		SET OutputRoot.JSON.Data.Messages.Response = 'Hello ACE World!! This is microservice 1!!';
 		SET OutputRoot.JSON.Data.Messages.Trigger = 'This messageflow is deployed via tekton triggering!!';
+		SET OutputRoot.JSON.Data.Messages.Trigger = 'change log: image tag: git commit id';
 		RETURN TRUE;
 	END;
 

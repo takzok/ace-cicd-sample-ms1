@@ -1,0 +1,32 @@
+# Admin Security
+  #  Authentication
+  #basicAuth: true                                                    # Clients web user name and password will be authenticated when set true
+  #ldapUrl: ldap[s]://server[:port]/baseDN[?[uid_attr][?[base|sub]]]  # ldap search url
+  #ldapBindDn: ldap::adminAuthentication                              # Resource alias
+  #ldapBindPassword: ldap::adminAuthentication                        # Resource alias
+  #  Authorization
+  #adminSecurity: 'inactive'                  # Used to enable Authorization. Clients web user role will be authorized when set active
+  #authMode: 'file'                           # Set admin authorization mode to 'file' or 'ldap'
+  #ldapAuthorizeUrl: ldap[s]://server[:port]/baseDN[?[attr_name][?[base|sub]][?filter_expr]]  # ldap authorization search url
+
+Security:
+  LdapAuthorizeAttributeToRoleMap:
+    # When 'authMode' is ldap, set the mapping from a matched LDAP authorization attribute, as
+    # configured in 'ldapAuthorizeUrl' to the ACE web user role name
+    # e.g. map the following LDAP group DNs to web user roles 'adminRole', 'viewRole'
+    #'cn=admins,cn=group,ou=ace': 'adminRole' 
+    #'cn=monitors,cn=group,ou=ace': 'viewRole'
+  Permissions:
+    # Set Admin Security Authorization file permissions by web user role using 'read+:write+:execute+' , or 'all+'
+    # '+' grants permission, '-' denies permission
+    # e.g. define the following web user roles 'viewRole' and 'adminRole'
+    #viewRole:  'read+:write-:execute-'
+    #adminRole: 'all+'
+  DataPermissions:
+    # Set Admin Security Authorization file permissions for Record and Replay web user role using 'read+:write+:execute+' , or 'all+'
+    # '+' grants permission, '-' denies permission.  Record and Replay roles also require 'read+' permission to be defined
+    # in the Permissions section above.
+    # e.g. define the following web user roles 'dataViewer', 'dataReplayer' and 'adminRole'
+    #dataViewer:  'read+:write-:execute-'
+    #dataReplayer: 'read+:write-:execute+'
+    #adminRole: 'all+'
