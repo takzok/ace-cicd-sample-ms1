@@ -15,4 +15,3 @@ spec:
       targetPort: 7800
   selector:
     app: ace-server-ms1
-    deploymentconfig: ace-server-ms1
